@@ -1,0 +1,18 @@
+#%%
+#importing the libraries
+import pandas as pd 
+import numpy as np 
+
+#creating the dataframes
+df_hist = pd.read_csv('historical_transactions.csv')
+df_merc =pd.read_csv('merchants.csv')
+
+
+#%%
+#chunking the history dataframe and merging with merchants
+chunksize = 10 ** 3
+counter = 0
+for chunk in pd.read_csv('historical_transactions.csv', chunksize=chunksize):
+    merged = df_hist.merge(df_merc, on='merchant_id')
+    counter += 1
+    merged.to_csv('{}.csv'.format(counter),index=False)
